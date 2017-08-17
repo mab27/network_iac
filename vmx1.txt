@@ -1,6 +1,20 @@
-## Last changed: 2017-04-24 13:47:22 UTC
+## Last commit: 2017-08-16 11:50:24 UTC by mab
 version 14.1R4.9;
+groups {
+    global {
+        interfaces {
+            lo0 {
+                unit 0 {
+                    family inet {
+                        address 192.0.2.2/24;
+                    }
+                }
+            }
+        }
+    }
+}
 system {
+    host-name vmx1;
     root-authentication {
         encrypted-password "$1$gjKQdWCJ$dYlWeP6CI2eWBCt4Dz.hH0";
     }
@@ -10,6 +24,7 @@ system {
             class super-user;
             authentication {
                 encrypted-password "$1$56iSMRiJ$l4F0kQnMFk2SeALRTmWz30";
+                ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC59zr9x9TADhHxRipnSkl0Yqn4SZXZ6Ao88E6yE3wfx7vtrk9k2zOvhwJKi7SJxrNJRdjC1YXMlnil5PfbIWgSVlFL+EUu2EsKCjhUGp891fwdhxZp4kd9dmXPIwlLF5hskmGpIqpUWlt/WL4v/0SfsqQqeiQnZERK/xYioLgL+4E+k7o6m6nHaRT85/L+R+iqVKtRfAU1ftxWAhC8JNJZ3Ecf/KirIUIr7eLkhqPv689Zn/u+eZcphoEBMW26mdjN0fvIWVZCHujj1ssahiT1o5yF8xk4QSwz4qkaN83NOCD6roKfZY3FXsjiE7+8nOaUvtLTLgBF00dyZDI8yuW7 mab@mab-infra";
             }
         }
     }
@@ -18,7 +33,9 @@ system {
             root-login allow;
         }
         netconf {
-            ssh;
+            ssh {
+                port 22;
+            }
             traceoptions {
                 file netconf;
                 flag all;
@@ -28,6 +45,14 @@ system {
     syslog {
         user * {
             any emergency;
+        }
+        host 192.168.0.110 {
+            any warning;
+        }
+        host 192.168.99.100 {
+            any any;
+            match UI_COMMIT_COMPLETED;
+            port 514;
         }
         file messages {
             any notice;
@@ -55,6 +80,7 @@ interfaces {
     }
 }
 routing-options {
+    router-id 30.30.30.30;
     forwarding-table {
         export bgp-ecmp;
     }
@@ -65,12 +91,17 @@ protocols {
             type external;
             import bgp-in;
             export bgp-out;
-            local-as 101;
+            local-as 65030;
             multipath multiple-as;
-            neighbor 172.16.0.40 {
-                peer-as 102;
+            neighbor 172.16.0.70 {
+                description arista1;
+                peer-as 65070;
             }
         }
+    }
+    lldp {
+        interface all;
+        interface ge-0/0/0;
     }
 }
 policy-options {
