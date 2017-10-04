@@ -2,13 +2,13 @@
     "eastRouter": {
     	"hostname": "vmx1",
     	"localASN": "65030",
-    	"routerId": "30.30.30.3O",
+    	"routerId": "30.30.30.30",
     	"peerIP": "172.16.0.70"
     },
     "westRouter": {
         "hostname": "arista1",
         "localASN": "65070",
-        "routerId": "70.70.70.71",
+        "routerId": "70.70.70.70",
         "peerIP": "172.16.0.30"
     }
 }
