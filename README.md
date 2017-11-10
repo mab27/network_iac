@@ -2,7 +2,7 @@
 
 ## Network IaC definition:
 
-- Network IaC means you are treating your network devices configurations in a manner similar to source code. This includes following software development practices for testing and deploying these changes to production: version control, collaborative GIT workflows, CI/CD ..
+- Network IaC means you are treating your network devices configurations in a manner similar to source code. This includes following software development practices for testing and deploying these changes to production: version control, collaborative GIT workflows, CI/CD ...
 - So the first step for Network IaC is to capture in a repository () all your relevant data being configurations, variables etc ... This allows to to version control your code.
 
 ## Content of this repo:
